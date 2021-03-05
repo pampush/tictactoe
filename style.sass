@@ -1,0 +1,112 @@
+@import "./fontawesome/scss/fontawesome.scss"
+@import  "./fontawesome/scss/solid.scss"
+@import "./fontawesome/scss/regular.scss"
+@import "./fontawesome/scss/_larger.scss"
+
+$base-font-size: 10px
+$base-color: #c6bfff
+$base-cell-font-size: 15rem
+$gameboard-cell-width: 20rem
+$gameboard-cell-height: 20rem
+$gameboard-size: 3
+  
+@mixin flex($justify: center, $align: center)
+  display: flex
+  justify-content: $justify
+  align-items: $align
+  flex-direction: column
+
+html
+  font-size: $base-font-size
+  box-sizing: border-box
+
+*, *:before, *:after
+  box-sizing: inherit
+
+button
+  user-select: none
+  cursor: pointer
+  font-size: 4rem
+  border-radius: .5rem
+  border: .1rem solid black
+  background-color: white
+
+
+.container
+  height: 100vh 
+  width: 60rem
+  margin: 0 auto
+
+.game
+  display: grid
+  background-color: $base-color
+  grid-template-columns: repeat($gameboard-size, auto)
+  //grid-template-columns: repeat(auto-fill,minmax($gameboard-width / $gameboard-size, 1fr))
+  &--border-collapse
+    border: 0.1rem solid black
+
+  &__cell
+    @include flex(center, center)
+    font-size: $base-cell-font-size
+    width: $gameboard-cell-width
+    height: $gameboard-cell-height
+    border: 0.1rem solid black
+    @extend  %fa-icon
+
+    &--icon-times:before
+      @extend %insert-times
+    &--icon-circle:before
+      @extend %insert-circle 
+
+  &--x-turn &__cell:not(&__cell--icon-times):not(&__cell--icon-circle):hover:before
+    color: grey
+    @extend %insert-times
+
+  &--circle-turn &__cell
+    &:not(.game__cell--icon-times):not(.game__cell--icon-circle):hover:before
+      color: grey
+      @extend %insert-circle
+
+  &__winner-box
+    diplay: none
+
+
+  &__buttons
+    display: flex
+    justify-content: center
+    padding: 10rem 0 0 0
+  
+  &__buttons-start
+    padding: 2rem
+
+  &__buttons-start:before
+    @extend .fas
+    @extend %insert-play
+
+  &__buttons-reload
+    padding: 2rem
+    margin-left: 1rem
+
+  &__buttons-reload:active, &__buttons-start:active
+    transform: scale(1.1)
+
+  &__buttons-reload:hover, &__buttons-start:hover
+    background: $base-color 
+
+  &__buttons-reload:before
+    @extend .fas
+    @extend %insert-reload
+
+%insert-circle
+  @extend .far
+  content: fa-content($fa-var-circle)
+%insert-times
+  @extend .fas 
+  content: fa-content($fa-var-times)
+
+%insert-play
+  content: fa-content($fa-var-play)
+
+%insert-reload
+  content: fa-content($fa-var-redo)
+ 
