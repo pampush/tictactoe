@@ -126,7 +126,7 @@ const view =
     }
 
     function winnerDisplay(winner) {
-      
+      console.log(winner);
     }
 
     return {
